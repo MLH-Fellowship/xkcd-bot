@@ -27,9 +27,9 @@ def get_img(url):
     html = html.replace('\r', '')
     html = html.replace('\n','')
     img_url_start = html.find(f'src="//{URL_START}')
-    img_url_end = html.find(f'srcset=')
-    img_url = 'https://' + html[img_url_start + 7: img_url_end - 2]
-    print('Getting image')
+    img_url_end = html.find(' ', img_url_start)
+    img_url = 'https://' + html[img_url_start + 7: img_url_end - 1]
+    print(f'Getting image: {img_url}')
     img = BytesIO(requests.get(img_url).content)
     return img
 
