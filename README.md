@@ -3,7 +3,7 @@
 Sends a daily xkcd comic to a channel of your choice, or you can ask it for a comic.
 
 ## Setup
-
+```
 docker build -t xkcd-bot .
 cp example.env .env
 ```
