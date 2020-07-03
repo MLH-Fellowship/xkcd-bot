@@ -3,13 +3,12 @@ import os
 import asyncio
 from discord.ext import commands
 import requests
-from bs4 import BeautifulSoup
 from io import BytesIO
 from dotenv import load_dotenv
 from random import randrange
 
-URL_START = "imgs.xkcd.com/comics/"
-BASE_URL = "https://xkcd.com"
+URL_START = "https://xkcd.com/"
+URL_END = "/info.0.json"
 
 bot = commands.Bot(command_prefix='-xkcd ')
 
@@ -20,21 +19,13 @@ def main():
 
 def get_img(url):
     print('Getting comic...')
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, features='html.parser')
-    print('Receved HTML')
-    html = str(soup.find(id='comic'))
-    html = html.replace('\r', '')
-    html = html.replace('\n','')
-    img_url_start = html.find(f'src="//{URL_START}')
-    img_url_end = html.find(' ', img_url_start)
-    img_url = 'https://' + html[img_url_start + 7: img_url_end - 1]
-    print(f'Getting image: {img_url}')
-    img = BytesIO(requests.get(img_url).content)
+    response = requests.get(url).json()
+    print(f'Getting image: {response["img"]}')
+    img = BytesIO(requests.get(response["img"]).content)
     return img
 
 def get_url():
-    return BASE_URL + '/' + str(randrange(1,2289))
+    return URL_START + str(randrange(1,2289)) + URL_END
 
 async def check_for_img():
     await bot.wait_until_ready()
