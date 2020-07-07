@@ -14,6 +14,7 @@ RUN apk upgrade --update --no-cache \
     && tar xzf /tmp/s6overlay.tar.gz -C / \
     && rm /tmp/s6overlay.tar.gz
 
+WORKDIR /app
 COPY requirements.txt /requirements.txt
 RUN \
     apk add --no-cache --virtual=build-dependencies \
@@ -26,7 +27,7 @@ RUN \
     /root/.cache \
     /tmp/*
 
-COPY src /app
+COPY app /app
 
 ADD root /
 # Init
