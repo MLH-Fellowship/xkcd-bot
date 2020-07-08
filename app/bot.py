@@ -16,6 +16,13 @@ def main():
     load_dotenv()
     bot.run(os.getenv('TOKEN'))
 
+@bot.event
+async def on_ready():
+    print("Ready!")
+    activity = discord.Activity(name="for comics",
+                                      type=discord.ActivityType.watching)
+    await bot.change_presence(status=discord.Status.online, activity=activity)
+
 def get_img(url):
     print('Getting comic...')
     response = requests.get(url).json()
