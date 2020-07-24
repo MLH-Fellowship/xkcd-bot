@@ -9,6 +9,7 @@ from random import randrange
 
 URL_START = "https://xkcd.com/"
 URL_END = "/info.0.json"
+TOTAL_COMICS = 2336
 
 bot = commands.Bot(command_prefix='-xkcd ')
 
@@ -31,7 +32,7 @@ def get_img(url):
     return img
 
 def get_url():
-    return URL_START + str(randrange(1,2289)) + URL_END
+    return URL_START + str(randrange(1,TOTAL_COMICS)) + URL_END
 
 @bot.command(description='Get a random comic')
 async def comic(ctx):
